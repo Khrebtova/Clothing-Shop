@@ -12,14 +12,16 @@ My First full stack (MERN stack) e-commerce application, using:
 - Context API, 
 - Firebase, 
 - Redux-Saga, 
-- Stripe .
+- Stripe, 
+- Sass.
 
 ## Learning goals:
 - Advance knowledge of React, its hooks and libraries,
 - Refresh knowledge of Redux,
 - Learn Firebase,
 - Stripe,
-- GraphQL.
+- GraphQL,
+- Sass.
 
 ## App functionality:
 - Sing in, Sing up options
