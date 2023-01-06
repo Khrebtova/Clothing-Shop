@@ -18,15 +18,15 @@ My First full stack (MERN stack) e-commerce application, using:
 ## Learning goals:
 - Advance knowledge of React, its hooks and libraries,
 - Refresh knowledge of Redux,
-- Learn Firebase,
+- Learn Firebase (store and authenticate users),
 - Stripe,
 - GraphQL,
-- Sass.
+- Sass for styling components.
 
 ## App functionality:
-- Sing in, Sing up options
+- Sing in, Sing up options with email and password.
 - sign in with google account
-- accept and processed payments
 - browse shop items
 - add/delete/update items in the cart
+- accept and processed payments
 
