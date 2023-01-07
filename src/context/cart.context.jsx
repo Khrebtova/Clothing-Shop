@@ -34,12 +34,12 @@ const handleRemoveOneItem = (cartItems, productToRemove) => {
 };
 
 const countItems = (cartItems) => {
-  return cartItems.reduce((acc, cartItem) => acc + cartItem.quantity, 0);
+  return cartItems.reduce((total, cartItem) => total + cartItem.quantity, 0);
 };
 
 const countTotal = (cartItems) => {
   return cartItems.reduce(
-    (acc, cartItem) => acc + cartItem.price * cartItem.quantity,
+    (total, cartItem) => total + cartItem.price * cartItem.quantity,
     0
   );
 };
@@ -63,6 +63,9 @@ export const CartProvider = ({ children }) => {
 
   useEffect(() => {
     setCartItemsCount(countItems(cartItems));
+  }, [cartItems]);
+
+  useEffect(() => {
     setCartTotal(countTotal(cartItems));
   }, [cartItems]);
 
