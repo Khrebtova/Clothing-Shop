@@ -18,7 +18,7 @@ My First full stack (MERN stack) e-commerce application, using:
 ## Learning goals:
 - Advance knowledge of React, its hooks and libraries,
 - Refresh knowledge of Redux,
-- Learn Firebase (store and authenticate users),
+- Learn Firebase (store and authenticate users + store shop products data),
 - Stripe,
 - GraphQL,
 - Sass for styling components.

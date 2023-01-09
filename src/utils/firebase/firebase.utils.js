@@ -15,6 +15,10 @@ import {
   doc,
   getDoc, //get data related to a document
   setDoc,
+  collection,
+  writeBatch,
+  query,
+  getDocs
 } from "firebase/firestore";
 
 // Your web app's Firebase configuration
@@ -47,6 +51,54 @@ export const signInWithEmailPassword = async (email, password) => {
 
 // Initialize Firebase Firestore database
 export const db = getFirestore();
+
+// ---------------------------add shop data to the firebase using collection and writebatch-------------------------------
+export const addCollectionAndDocuments = async (
+  collectionKey,
+  objectsToAdd
+) => {
+  const collectionRef = collection(db, collectionKey);
+  const batch = writeBatch(db);
+  objectsToAdd.forEach((obj) => {
+    const newDocRef = doc(collectionRef, obj.title.toLowerCase());
+    batch.set(newDocRef, obj);
+  });
+
+  await batch.commit();
+  console.log("Collection added successfully");
+};
+
+// ---------------------------get shop data from firebase-------------------------------
+export const getCategoriesAndDocuments = async () => {
+  const collectionRef = collection(db, "categories");
+  // q get us a object what we can get snapshot from
+  const q = query(collectionRef);
+  //getDocs give as async ability to fetch snapshots from q
+  const querySnapshot = await getDocs(q);
+  // querySnapshot.docs give us an array of documents inside the collection
+  const categoryMap = querySnapshot.docs.reduce((acc, docSnapshot) => {
+    const { title, items } = docSnapshot.data();
+    acc[title.toLowerCase()] = items;
+    return acc;
+  }, {});
+
+  return categoryMap;
+}
+/*
+[
+  {
+    id:1,
+    title: 'hats',
+    items: [{}, {}, {}]
+  },
+  {
+    id:2,
+    title: 'sneakers',
+    items: [{}, {}, {}]
+  }
+]
+
+*/
 
 //add user data to the database
 export const createUserDocumentFromAuth = async (
@@ -91,4 +143,5 @@ export const createAuthUserWithEmailAndPassword = async (email, password) => {
 export const signOutUser = async () => await signOut(auth);
 
 // ---------------------------listen for auth state change to keep user logged in even after page refresh-------------------------------
-export const onAuthStateChangedListener = (callback) => onAuthStateChanged(auth, callback);
+export const onAuthStateChangedListener = (callback) =>
+  onAuthStateChanged(auth, callback);

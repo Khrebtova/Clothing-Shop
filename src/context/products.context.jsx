@@ -1,5 +1,6 @@
-import React, { createContext, useState } from "react";
-import SHOP_DATA from "../shop-data.json";
+import React, { createContext, useState, useEffect } from "react";
+import { getCategoriesAndDocuments } from "../utils/firebase/firebase.utils";
+
 
 export const ProductsContext = createContext({
   products: [],
@@ -7,7 +8,20 @@ export const ProductsContext = createContext({
 });
 
 export const ProductsProvider = ({ children }) => {
-  const [products, setProducts] = useState(SHOP_DATA);
+  const [products, setProducts] = useState([]);
+  console.log("products", products)
+  // add use effect to add data to firestore database just once when the app is loaded, then delete it to avoid adding the same data again and again
+  // useEffect(() => {
+  //   addCollectionAndDocuments("categories", SHOP_DATA);
+  // }, []);
+
+  useEffect (() => {
+    const getCategoriesMap = async () =>  {
+      const categoriesMap = await getCategoriesAndDocuments();
+      setProducts(categoriesMap);
+    }
+    getCategoriesMap();
+  }, [])
 
   const value = { products, setProducts };
 
