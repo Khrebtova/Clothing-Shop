@@ -1,16 +1,16 @@
-import "./category-item.styles.scss";
+import "./directory-banner.styles.scss";
 
-const CategoryItem = ({ category }) => {
+const DirectoryBanner = ({ category }) => {
   const { imageUrl, title } = category;
   return (
-    <div className="category-container">
+    <div className="directory-banner-container">
       <div
         className="background-image"
         style={{
           backgroundImage: `url(${imageUrl})`,
         }}
       />
-      <div className="category-body-container">
+      <div className="banner-body-container">
         <h2>{title.toUpperCase()}</h2>
         <p>SHOP NOW</p>
       </div>
@@ -18,4 +18,4 @@ const CategoryItem = ({ category }) => {
   );
 };
 
-export default CategoryItem;
+export default DirectoryBanner;
