@@ -13,7 +13,7 @@ My First full stack (MERN stack) e-commerce application, using:
 - Firebase, 
 - Redux-Saga, 
 - Stripe, 
-- Sass.
+- Sass, Styled-components.
 
 ## Learning goals:
 - Advance knowledge of React, its hooks and libraries,

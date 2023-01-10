@@ -1,20 +1,22 @@
-import "./directory-banner.styles.scss";
+import {
+  BackgroundImage,
+  Body,
+  DirectoryBannerContainer,
+} from "./directory-banner.styles";
+import { useNavigate } from "react-router-dom";
 
 const DirectoryBanner = ({ category }) => {
+  const navigate = useNavigate();
+
   const { imageUrl, title } = category;
   return (
-    <div className="directory-banner-container">
-      <div
-        className="background-image"
-        style={{
-          backgroundImage: `url(${imageUrl})`,
-        }}
-      />
-      <div className="banner-body-container">
+    <DirectoryBannerContainer>
+      <BackgroundImage imageUrl={imageUrl} />
+      <Body onClick={() => navigate(`shop/${title}`)}>
         <h2>{title.toUpperCase()}</h2>
         <p>SHOP NOW</p>
-      </div>
-    </div>
+      </Body>
+    </DirectoryBannerContainer>
   );
 };
 

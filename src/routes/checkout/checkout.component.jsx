@@ -1,7 +1,12 @@
 import React, { useContext } from "react";
 import CheckoutItem from "../../components/checkout-item/checkout-item.component";
 import { CartContext } from "../../context/cart.context";
-import "./checkout.styles.scss";
+import {
+  CheckoutContainer,
+  CheckoutHeader,
+  HeaderBlock,
+  Total,
+} from "./checkout.styles.jsx";
 
 const Checkout = () => {
   const { cartItems, cartTotal } = useContext(CartContext);
@@ -13,22 +18,25 @@ const Checkout = () => {
     "Total",
     "Remove",
   ];
+
   const renderCartItems = () => {
     return cartItems.map((item) => <CheckoutItem key={item.id} item={item} />);
   };
+
   const renderHeader = () => {
     return headerValues.map((value) => (
-      <div className="header-block" key ={value}>
+      <HeaderBlock key={value}>
         <span>{value}</span>
-      </div>
+      </HeaderBlock>
     ));
   };
+
   return (
-    <div className="checkout-container">
-      <div className="checkout-header">{renderHeader()}</div>
+    <CheckoutContainer>
+      <CheckoutHeader>{renderHeader()}</CheckoutHeader>
       {cartItems ? renderCartItems() : <h1>nothing in the cart</h1>}
-      <div className="total">TOTAL: ${cartTotal}</div>
-    </div>
+      <Total>TOTAL: ${cartTotal}</Total>
+    </CheckoutContainer>
   );
 };
 
