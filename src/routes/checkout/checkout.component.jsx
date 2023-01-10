@@ -18,7 +18,7 @@ const Checkout = () => {
   };
   const renderHeader = () => {
     return headerValues.map((value) => (
-      <div className="header-block">
+      <div className="header-block" key ={value}>
         <span>{value}</span>
       </div>
     ));
