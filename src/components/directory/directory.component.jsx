@@ -1,5 +1,9 @@
 import DirectoryBanner from "../directory-banner/directory-banner.component";
-
+import hats from '../../assets/categories/hats.jpg';
+import jackets from '../../assets/categories/jackets.jpg';
+import sneakers from '../../assets/categories/sneakers.jpg';
+import womens from '../../assets/categories/women.jpg';
+import mens from '../../assets/categories/men.jpg';
 import { DirectoryMenuContainer } from "./directory.styles.jsx";
 
 const Directory = () => {
@@ -7,27 +11,27 @@ const Directory = () => {
     {
       id: 1,
       title: "hats",
-      imageUrl: "https://i.ibb.co/cvpntL1/hats.png",
+      imageUrl: `${hats}`,
     },
     {
       id: 2,
       title: "jackets",
-      imageUrl: "https://i.ibb.co/px2tCc3/jackets.png",
+      imageUrl: `${jackets}`,
     },
     {
       id: 3,
       title: "sneakers",
-      imageUrl: "https://i.ibb.co/0jqHpnp/sneakers.png",
+      imageUrl: `${sneakers}`,
     },
     {
       id: 4,
       title: "womens",
-      imageUrl: "https://i.ibb.co/GCCdy8t/womens.png",
+      imageUrl: `${womens}`,
     },
     {
       id: 5,
       title: "mens",
-      imageUrl: "https://i.ibb.co/R70vBrQ/men.png",
+      imageUrl: `${mens}`,
     },
   ];
 
