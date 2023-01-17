@@ -1,5 +1,5 @@
-import { createContext, useState, useEffect } from "react";
-
+import { createContext, useReducer } from "react";
+import { createAction } from "../utils/reducer/reducer.utils";
 const addCartItem = (cartItems, productToAdd) => {
   const existingCartItem = cartItems.find(
     (cartItem) => cartItem.id === productToAdd.id
@@ -55,30 +55,73 @@ export const CartContext = createContext({
   cartTotal: 0,
 });
 
+const INITIAL_STATE = {
+  cartHidden: true,
+  cartItems: [],
+  cartItemsCount: 0,
+  cartTotal: 0,
+};
+
+export const CART_ACTION_TYPES = {
+  TOGGLE_CART_HIDDEN: "TOGGLE_CART_HIDDEN",
+  SET_CART_ITEMS: "SET_CART_ITEMS",
+  SET_CART_COUNT: "SET_CART_COUNT",
+  SET_CART_TOTAL: "SET_CART_TOTAL",
+};
+
+const CartReducer = (state, action) => {
+  const { type, payload } = action;
+
+  switch (type) {
+    case CART_ACTION_TYPES.SET_CART_ITEMS:
+      return {
+        ...state,
+        ...payload,
+      };
+    case CART_ACTION_TYPES.TOGGLE_CART_HIDDEN:
+      return {
+        ...state,
+        cartHidden: !state.cartHidden,
+      };
+    default:
+      throw new Error(`Unhandled action type: ${type} in cart reducer`);
+  }
+};
+
 export const CartProvider = ({ children }) => {
-  const [cartHidden, setCartHidden] = useState(true);
-  const [cartItems, setCartItems] = useState([]);
-  const [cartItemsCount, setCartItemsCount] = useState(0);
-  const [cartTotal, setCartTotal] = useState(0);
+  const [state, dispatch] = useReducer(CartReducer, INITIAL_STATE);
+  const { cartItems, cartItemsCount, cartTotal, cartHidden } = state;
 
-  useEffect(() => {
-    setCartItemsCount(countItems(cartItems));
-  }, [cartItems]);
+  const updateCartItemsReducer = (newCartItems) => {
+    const newCartItemsCount = countItems(newCartItems);
+    const newCartTotal = countTotal(newCartItems);
+    const payload = {
+      cartItems: newCartItems,
+      cartItemsCount: newCartItemsCount,
+      cartTotal: newCartTotal,
+    };
+    dispatch(createAction(CART_ACTION_TYPES.SET_CART_ITEMS, payload));
+  };
 
-  useEffect(() => {
-    setCartTotal(countTotal(cartItems));
-  }, [cartItems]);
+  const toggleCartHidden = () => {
+      dispatch(createAction(CART_ACTION_TYPES.TOGGLE_CART_HIDDEN));
+  };
 
-  const toggleCartHidden = () => setCartHidden(!cartHidden);
-  const addItemToCart = (item) => setCartItems(addCartItem(cartItems, item));
-  const clearItemFromCart = (item) =>
-    setCartItems(handleRemoveItemFromCart(cartItems, item));
-  const removeOneItem = (item) =>
-    setCartItems(handleRemoveOneItem(cartItems, item));
+  const addItemToCart = (item) => {
+    const newCartItems = addCartItem(cartItems, item);
+    updateCartItemsReducer(newCartItems);
+  };
+  const clearItemFromCart = (item) => {
+    const newCartItems = handleRemoveItemFromCart(cartItems, item);
+    updateCartItemsReducer(newCartItems);
+  };
+  const removeOneItem = (item) => {
+    const newCartItems = handleRemoveOneItem(cartItems, item);
+    updateCartItemsReducer(newCartItems);
+  };
 
   const value = {
     cartHidden,
-    setCartHidden,
     toggleCartHidden,
     cartItems,
     addItemToCart,
