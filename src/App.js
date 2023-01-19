@@ -4,8 +4,10 @@ import { useDispatch } from "react-redux";
 import {
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
+  getCategoriesAndDocuments,
 } from "./utils/firebase/firebase.utils";
 import { setCurrentUser } from "./store/user/user.action";
+import { setCategoriesMap } from "./store/categories/categories.action";
 import Home from "./routes/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
 import Authentication from "./routes/authentication/authentication.component";
@@ -13,6 +15,8 @@ import Shop from "./routes/shop/shop.component";
 import Checkout from "./routes/checkout/checkout.component";
 
 const App = () => {
+  //dispatch is a function that allows us to fire off actions to our reducer
+  //dispatch will not update so it wont cause a re-render
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -24,6 +28,15 @@ const App = () => {
     });
 
     return unsubscribe;
+  }, [dispatch]);
+
+  useEffect(() => {
+    const getCategories = async () => {
+      const categories = await getCategoriesAndDocuments();
+      console.log(categories);
+      dispatch(setCategoriesMap(categories));
+    };
+    getCategories();
   }, [dispatch]);
 
   return (
