@@ -1,15 +1,19 @@
-import React, { useContext } from "react";
-import { CartContext } from "../../context/cart.context";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addItemToCart, removeOneItem } from "../../store/cart/cart.action";
+import { selectCartItems } from "../../store/cart/cart.selector";
 import { CartItemContainer, ItemDetails } from "./cart-item.styles";
 
 const CartItem = ({ cartItem }) => {
+  const dispatch = useDispatch();
   const { imageUrl, price, name, quantity } = cartItem;
-  const { removeOneItem, addItemToCart, clearItemFromCart } =
-    useContext(CartContext);
+  const cartItems = useSelector(selectCartItems);
 
-  //const handleClearItemFromCart = () => clearItemFromCart(cartItem);
-  const handleAddOneItem = () => addItemToCart(cartItem);
-  const handleRemoveOneItem = () => removeOneItem(cartItem);
+  //const handleClearItemFromCart = () => dispatch(clearItemFromCart(cartItems, cartItem));
+  const handleAddOneItem = () => dispatch(addItemToCart(cartItems, cartItem));
+  const handleRemoveOneItem = () =>
+    dispatch(removeOneItem(cartItems, cartItem));
+
   return (
     <CartItemContainer>
       <img src={imageUrl} alt={`${name}`} />
