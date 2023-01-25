@@ -10,13 +10,10 @@ import {
 } from "./category.styles.jsx";
 
 const CategoryPage = () => {
-  const { category } = useParams();
-  
-  const categoriesMap = useSelector(selectCategories);
-  
+  const { category } = useParams();  
+  const categoriesMap = useSelector(selectCategories);  
   const [products, setProducts] = useState(categoriesMap[category]);
   
-  console.log(category, products);
   useEffect(() => {
     setProducts(categoriesMap[category]);
   }, [categoriesMap, category]);

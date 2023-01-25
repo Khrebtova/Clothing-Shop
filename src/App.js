@@ -33,7 +33,7 @@ const App = () => {
   useEffect(() => {
     const getCategories = async () => {
       const categories = await getCategoriesAndDocuments();
-      console.log(categories);
+      //console.log(categories);
       dispatch(setCategoriesMap(categories));
     };
     getCategories();
