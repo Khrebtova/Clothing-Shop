@@ -4,10 +4,10 @@ import { useDispatch } from "react-redux";
 import {
   onAuthStateChangedListener,
   createUserDocumentFromAuth,
-  getCategoriesAndDocuments,
 } from "./utils/firebase/firebase.utils";
 import { setCurrentUser } from "./store/user/user.action";
-import { setCategoriesMap } from "./store/categories/categories.action";
+import { fetchCategoriesAsync } from "./store/categories/categories.action";
+
 import Home from "./routes/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
 import Authentication from "./routes/authentication/authentication.component";
@@ -31,12 +31,7 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    const getCategories = async () => {
-      const categories = await getCategoriesAndDocuments();
-      //console.log(categories);
-      dispatch(setCategoriesMap(categories));
-    };
-    getCategories();
+    dispatch(fetchCategoriesAsync());
   }, [dispatch]);
 
   return (

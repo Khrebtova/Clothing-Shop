@@ -15,6 +15,11 @@ export const selectCategories = createSelector([selectCategory], (categories) =>
   }, {})
 );
 
+export const selectCategoriesIsLoading = createSelector(
+  [selectCategoryReducer],
+  (categoriesSlice) => categoriesSlice.isLoading
+);
+
 // export const selectCategories = (state) =>
 //   state.categories.categories.reduce((acc, category) => {
 //     const { title, items } = category;
