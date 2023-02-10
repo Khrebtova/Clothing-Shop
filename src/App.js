@@ -6,8 +6,7 @@ import {
   createUserDocumentFromAuth,
 } from "./utils/firebase/firebase.utils";
 import { setCurrentUser } from "./store/user/user.action";
-import { fetchCategoriesAsync } from "./store/categories/categories.action";
-
+import { fetchCategoriesStart } from "./store/categories/categories.action";
 import Home from "./routes/home/home.component";
 import Navigation from "./routes/navigation/navigation.component";
 import Authentication from "./routes/authentication/authentication.component";
@@ -31,7 +30,7 @@ const App = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    dispatch(fetchCategoriesAsync());
+    dispatch(fetchCategoriesStart());
   }, [dispatch]);
 
   return (
