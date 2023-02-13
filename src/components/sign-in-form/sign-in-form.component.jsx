@@ -1,13 +1,16 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import {
+  googleSignInStart,
+  emailSignInStart,
+} from "../../store/user/user.action";
 import Button from "../button/button.component";
 import FormInput from "../form-input/form-input.component";
 import { ButtonsContainer } from "./sign-in-form.styles.jsx";
-import { SignUpContainer as SignInContainer, SignUpTitle as SignInTitle} from "../sign-up-form/sign-up-form.styles.jsx";
-
 import {
-  signInWithGooglPopup,
-  signInWithEmailPassword,
-} from "../../utils/firebase/firebase.utils";
+  SignUpContainer as SignInContainer,
+  SignUpTitle as SignInTitle,
+} from "../sign-up-form/sign-up-form.styles.jsx";
 import "./sign-in-form.styles.jsx";
 
 const defaultFormFields = {
@@ -18,7 +21,7 @@ const defaultFormFields = {
 const SignInForm = () => {
   const [formFields, setFormFields] = useState(defaultFormFields);
   const { email, password } = formFields;
-
+  const dispatch = useDispatch();
   const resetFormFields = () => setFormFields(defaultFormFields);
 
   const handleChange = (event) => {
@@ -27,14 +30,14 @@ const SignInForm = () => {
   };
 
   const signInWithGoogle = async () => {
-    await signInWithGooglPopup();
+    dispatch(googleSignInStart());
     console.log("Sign in with google - success ");
   };
 
   const handleSubmitForm = async (event) => {
     event.preventDefault();
     try {
-      await signInWithEmailPassword(email, password);
+      dispatch(emailSignInStart(email, password));
       console.log("Sign in - success ");
       resetFormFields();
     } catch (error) {
@@ -73,10 +76,8 @@ const SignInForm = () => {
           value={password}
         />
         <ButtonsContainer>
-          <Button type="submit">
-            Sign In
-          </Button>
-          <Button buttonType='google' onClick={signInWithGoogle}>
+          <Button type="submit">Sign In</Button>
+          <Button buttonType="google" onClick={signInWithGoogle}>
             Sign In with Google
           </Button>
         </ButtonsContainer>

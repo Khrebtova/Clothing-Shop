@@ -78,23 +78,8 @@ export const getCategoriesAndDocuments = async () => {
   // querySnapshot.docs give us an array of documents inside of the collection
   return querySnapshot.docs.map((docSnapshot) => docSnapshot.data());
 };
-/*
-[
-  {
-    id:1,
-    title: 'hats',
-    items: [{}, {}, {}]
-  },
-  {
-    id:2,
-    title: 'sneakers',
-    items: [{}, {}, {}]
-  }
-]
 
-*/
-
-//add user data to the database
+// -------------------------------------------add user data to the database-------------------------------------------
 export const createUserDocumentFromAuth = async (
   userAuth,
   additionalInformation = {}
@@ -102,7 +87,6 @@ export const createUserDocumentFromAuth = async (
   // if userAuth is null, return
   if (!userAuth) return;
   const userDocRef = doc(db, "users", userAuth.uid);
-
   const userSnapshot = await getDoc(userDocRef);
 
   // if user data does not exist in the database,create/set user data in the database using Snapshot
@@ -121,8 +105,8 @@ export const createUserDocumentFromAuth = async (
       console.log("Error creating user", error.message);
     }
   }
-  // if user data exists in the database, return userDocRef
-  return userDocRef;
+  // if user data exists in the database, return userSnapshot
+  return userSnapshot;
 };
 
 export const createAuthUserWithEmailAndPassword = async (email, password) => {
@@ -139,3 +123,16 @@ export const signOutUser = async () => await signOut(auth);
 // ---------------------------listen for auth state change to keep user logged in even after page refresh-------------------------------
 export const onAuthStateChangedListener = (callback) =>
   onAuthStateChanged(auth, callback);
+
+  export const getCurrentUser = () => {
+    return new Promise((resolve, reject) => {
+      const unsubscribe = onAuthStateChanged(
+        auth,
+        (userAuth) => {
+          unsubscribe();
+          resolve(userAuth);
+        },
+        reject
+      );
+    });
+  };
