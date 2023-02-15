@@ -11,6 +11,7 @@ import {
   HeaderBlock,
   Total,
 } from "./checkout.styles.jsx";
+import PaymentForm from "../../components/payment-form/payment-form.component";
 
 const Checkout = () => {
   const cartItems = useSelector(selectCartItems);
@@ -42,6 +43,7 @@ const Checkout = () => {
       <CheckoutHeader>{renderHeader()}</CheckoutHeader>
       {cartItems ? renderCartItems() : <h1>nothing in the cart</h1>}
       <Total>TOTAL: ${cartTotal}</Total>
+      <PaymentForm />
     </CheckoutContainer>
   );
 };
