@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { signOutStart } from "../../store/user/user.action";
 import { selectCurrentUser } from "../../store/user/user.selector";
 import { selectCartHidden } from "../../store/cart/cart.selector";
-import Logo from "../../assets/coffee-stain-1.png";
+import Logo from "../../assets/malina.png";
 import CartIcon from "../../components/cart-icon/cart-icon.component";
 import CartDropdown from "../../components/cart-dropdown/cart-dropdown.component";
 import {
@@ -41,9 +41,9 @@ const Navigation = () => {
           ) : (
             <NavLink to="sign-in">SIGN IN</NavLink>
           )}
-          <CartIcon />
+          {currentUser ? <CartIcon /> : null }
         </NavLinkContainer>
-        {cartHidden ? null : <CartDropdown />}
+        {cartHidden || !currentUser ? null : <CartDropdown />}
       </NavigationContainer>
       <Outlet />
     </Fragment>

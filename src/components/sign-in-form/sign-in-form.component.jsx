@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import {
   googleSignInStart,
@@ -23,7 +24,7 @@ const SignInForm = () => {
   const { email, password } = formFields;
   const dispatch = useDispatch();
   const resetFormFields = () => setFormFields(defaultFormFields);
-
+  const navigate = useNavigate();
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormFields({ ...formFields, [name]: value });
@@ -32,6 +33,7 @@ const SignInForm = () => {
   const signInWithGoogle = async () => {
     dispatch(googleSignInStart());
     console.log("Sign in with google - success ");
+    navigate("/");
   };
 
   const handleSubmitForm = async (event) => {
@@ -40,6 +42,7 @@ const SignInForm = () => {
       dispatch(emailSignInStart(email, password));
       console.log("Sign in - success ");
       resetFormFields();
+      navigate("/");
     } catch (error) {
       switch (error.code) {
         case "auth/user-not-found":
@@ -76,8 +79,8 @@ const SignInForm = () => {
           value={password}
         />
         <ButtonsContainer>
-          <Button type="submit">Sign In</Button>
-          <Button buttonType="google" onClick={signInWithGoogle}>
+          <Button type="submit">Sign In</Button>                
+          <Button buttonType="google" onClick={signInWithGoogle} >
             Sign In with Google
           </Button>
         </ButtonsContainer>

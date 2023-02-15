@@ -10,11 +10,12 @@ export const NavigationContainer = styled.div`
 `;
 
 export const LogoContainer = styled(Link)`
-  height: 100%;
-  width: 70px;  
+  height: 60px;
+  width: 60px;  
   &:hover {
     transform: scale(1.1);
-    transition: transform 1s;
+    transition: transform 1s ease-in-out;
+    opacity: 0.8;
   }
 `;
 export const NavLinkContainer = styled.div`
@@ -28,4 +29,8 @@ export const NavLinkContainer = styled.div`
 export const NavLink = styled(Link)`
   padding: 10px 15px;
   cursor: pointer;
+  &:hover {
+    transform: scale(1.1);
+    
+  }
 `;

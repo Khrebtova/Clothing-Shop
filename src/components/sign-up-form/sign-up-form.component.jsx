@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { signUpStart } from "../../store/user/user.action";
 import FormInput from "../form-input/form-input.component";
@@ -17,7 +18,7 @@ const SignUpForm = () => {
   const { displayName, email, password, confirmPassword } = newUser;
   const dispatch = useDispatch();
   const resetForm = () => setNewUser(defaultFormFields);
-
+  const navigate = useNavigate();
   const handleChange = (event) => {
     const { name, value } = event.target;
     setNewUser({ ...newUser, [name]: value });
@@ -32,6 +33,7 @@ const SignUpForm = () => {
     try {
       dispatch(signUpStart(email, password, displayName));
       resetForm();
+      navigate("/");
     } catch (error) {
       if (error.code === "auth/email-already-in-use") {
         alert("Email already in use, can not create a new user");

@@ -33,6 +33,10 @@ export const GoogleSignInButton = styled(BaseButton)`
   &:hover {
     background-color: #357ae8;
     border: none;
+
+    tooltip {
+      text-content: "not available at the moment";
+    }
   }
 `;
 
